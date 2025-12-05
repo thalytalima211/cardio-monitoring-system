@@ -17,6 +17,6 @@ public class App {
         IMqttToken token = myClient.connect();
         token.waitForCompletion();
         
-        myClient.subscribe("/teste/1", 0);
+        myClient.subscribe("/teste/1", 1);
     }
 }
