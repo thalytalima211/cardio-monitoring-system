@@ -1,0 +1,18 @@
+### IDE ###
+.idea/
+*.iml
+
+### Build ###
+target/
+bin/
+out/
+build/
+
+### Sistema Operacional ###
+.DS_Store
+Thumbs.db
+
+### Logs ###
+*.log
+
+*localhost1883*
