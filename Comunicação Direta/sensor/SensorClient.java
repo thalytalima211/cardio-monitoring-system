@@ -36,7 +36,7 @@ public class SensorClient {
             // envia BPM a cada 1 segundo
             while (true) {
                 int bpm = generateBpm();
-                System.out.println("[sensor.SensorClient] Gerado e enviado BPM: " + bpm);
+                System.out.println("[SensorClient] Gerado e enviado BPM: " + bpm);
                 server.sendBPM(bpm);
 
                 Thread.sleep(1000);
