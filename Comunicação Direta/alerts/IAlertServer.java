@@ -8,6 +8,6 @@ public interface IAlertServer extends Remote {
 
     void notifyHighBPM(int bpm) throws RemoteException;
 
-    void notifySuddenIncrease(int previous, int current) throws RemoteException;
+    void notifySuddenIncrease(int before, int now) throws RemoteException;
 }
 
