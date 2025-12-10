@@ -44,9 +44,9 @@ public class PaceSensorPublisher {
                 config.retained
             );
 
-            System.out.println("[PaceSensor] Sent → speed=" + String.format("%.2f", speed) +
+            System.out.println("[PaceSensor] Sent → speed=" + String.format(java.util.Locale.US, "%.2f", speed) +
                     " km/h | pace=" + formatPace(pace) +
-                    " | distance=" + String.format("%.3f", distanceKm) + " km | ts=" + Instant.now());
+                    " | distance=" + String.format(java.util.Locale.US, "%.3f", distanceKm) + " km | ts=" + Instant.now());
 
             Thread.sleep(config.publishIntervalMs);
         }
@@ -92,9 +92,9 @@ public class PaceSensorPublisher {
     private String buildJson(double speedKmH, double pace, double distanceKm) {
         return "{" +
                 "\"sensorId\":\"" + sensorId + "\"," +
-                "\"speed_kmh\":" + String.format("%.2f", speedKmH) + "," +
-                "\"pace_min_km\":" + String.format("%.2f", pace) + "," +
-                "\"distance_km\":" + String.format("%.3f", distanceKm) + "," +
+                "\"speed_kmh\":" + String.format(java.util.Locale.US, "%.2f", speedKmH) + "," +
+                "\"pace_min_km\":" + String.format(java.util.Locale.US, "%.2f", pace) + "," +
+                "\"distance_km\":" + String.format(java.util.Locale.US, "%.3f", distanceKm) + "," +
                 "\"ts\":\"" + Instant.now() + "\"" +
                 "}";
     }

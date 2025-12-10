@@ -45,7 +45,7 @@ public class CaloriesSensorPublisher {
             );
 
             System.out.println("[CaloriesSensor] Sent → TotalCalories=" +
-                    String.format("%.2f", totalCalories) +
+                    String.format(java.util.Locale.US, "%.2f", totalCalories) +
                     " | topic=" + config.topic +
                     " | ts=" + Instant.now());
 
@@ -78,7 +78,7 @@ public class CaloriesSensorPublisher {
     private String buildJson(double totalCalories) {
         return "{" +
                 "\"sensorId\":\"" + sensorId + "\"," +
-                "\"calories\":" + String.format("%.2f", totalCalories) + "," +
+                "\"calories\":" + String.format(java.util.Locale.US, "%.2f", totalCalories) + "," +
                 "\"ts\":\"" + Instant.now() + "\"" +
                 "}";
     }
