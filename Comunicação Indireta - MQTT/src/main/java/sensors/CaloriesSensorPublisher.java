@@ -1,12 +1,14 @@
 package sensors;
 
 import org.eclipse.paho.client.mqttv3.*;
+import utils.Config;
+import utils.GetIP;
 import java.time.Instant;
 import java.util.Random;
 import java.util.UUID;
 
 class CaloriesConfig {
-    public String brokerUrl = "tcp://localhost:1883";
+    public String brokerUrl = "tcp://" + Config.get("mqtt.broker") + ":" + Config.get("mqtt.port");
     public String topic = "cardio/sensor/calories";
     public int publishIntervalMs = 5000; // envia a cada 5 segundos
     public double baseCaloriesPerMin = 10; // gasto médio por minuto
@@ -29,7 +31,14 @@ public class CaloriesSensorPublisher {
 
     public void start() throws Exception {
         connect();
+        String localIp = GetIP.getMyIp();
+
+        System.out.println("[CaloriesSensor] -----------------------------");
+        System.out.println("[CaloriesSensor] Iniciando Sensor de calorias…");
+        System.out.println("[CaloriesSensor] Rodando nesta máquina (IP local): " + localIp);
+        System.out.println("[CaloriesSensor] Enviando dados para broker (IP): " + Config.get("mqtt.broker"));
         System.out.println("[CaloriesSensor] Online | SensorId=" + sensorId);
+        System.out.println("[CaloriesSensor] -----------------------------");
 
         while (true) {
             double calories = generateCaloriesIncrement();

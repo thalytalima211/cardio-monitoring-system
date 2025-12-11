@@ -1,12 +1,16 @@
 package sensors;
 
 import org.eclipse.paho.client.mqttv3.*;
+import utils.Config;
+import utils.GetIP;
+
+import java.net.InetAddress;
 import java.time.Instant;
 import java.util.Random;
 import java.util.UUID;
 
 class SensorConfig {
-    public String brokerUrl = "tcp://localhost:1883";
+    public String brokerUrl = "tcp://" + Config.get("mqtt.broker") + ":" + Config.get("mqtt.port");
     public String topic = "cardio/sensor/bpm";
     public int publishIntervalMs = 5000;
     public int baseBpm = 140;
@@ -28,7 +32,14 @@ public class HeartbeatSensorPublisher {
 
     public void start() throws Exception {
         connect();
-        System.out.println("[Sensor] Online | SensorId=" + sensorId);
+        String localIp = GetIP.getMyIp();
+
+        System.out.println("[HeartbeatSensor] -----------------------------");
+        System.out.println("[HeartbeatSensor] Iniciando Sensor de batimentos…");
+        System.out.println("[HeartbeatSensor] Rodando nesta máquina (IP local): " + localIp);
+        System.out.println("[HeartbeatSensor] Enviando dados para broker (IP): " + Config.get("mqtt.broker"));
+        System.out.println("[HeartbeatSensor] Online | SensorId=" + sensorId);
+        System.out.println("[HeartbeatSensor] -----------------------------");
 
         while (true) {
             int bpm = generateBpm();

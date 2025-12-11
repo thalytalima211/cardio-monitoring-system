@@ -1,12 +1,16 @@
 package sensors;
 
 import org.eclipse.paho.client.mqttv3.*;
+import utils.Config;
+import utils.GetIP;
+
+import java.net.InetAddress;
 import java.time.Instant;
 import java.util.Random;
 import java.util.UUID;
 
 class PaceSpeedConfig {
-    public String brokerUrl = "tcp://localhost:1883";
+    public String brokerUrl = "tcp://" + Config.get("mqtt.broker") + ":" + Config.get("mqtt.port");
     public String topic = "cardio/sensor/pace_speed";
     public int publishIntervalMs = 5000; 
     public double baseSpeedKmH = 9.5;
@@ -28,7 +32,14 @@ public class PaceSensorPublisher {
 
     public void start() throws Exception {
         connect();
+        String localIp = GetIP.getMyIp();
+
+        System.out.println("[PaceSensor] -----------------------------");
+        System.out.println("[PaceSensor] Iniciando Sensor de pace…");
+        System.out.println("[PaceSensor] Rodando nesta máquina (IP local): " + localIp);
+        System.out.println("[PaceSensor] Enviando dados para broker (IP): " + Config.get("mqtt.broker"));
         System.out.println("[PaceSensor] Online | SensorId=" + sensorId);
+        System.out.println("[PaceSensor] -----------------------------");
 
         while (true) {
             double speed = generateSpeed();

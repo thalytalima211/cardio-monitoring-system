@@ -1,14 +1,24 @@
 package analytics;
 
 import org.eclipse.paho.client.mqttv3.*;
+import utils.Config;
+import utils.GetIP;
+
+import java.net.InetAddress;
 import java.util.UUID;
 
 public class AnalyticsApp {
-    private static final String BROKER = "tcp://localhost:1883";
+    private static final String BROKER = "tcp://" + Config.get("mqtt.broker") + ":" + Config.get("mqtt.port");
     private static final String CLIENT_ID = "analytics-" + UUID.randomUUID().toString();
 
     public static void main(String[] args) throws Exception {
-        System.out.println("[AnalyticsApp] Iniciando...");
+        String localIp = GetIP.getMyIp();
+
+        System.out.println("[AnalyticsApp] -----------------------------");
+        System.out.println("[AnalyticsApp] Iniciando Analytics…");
+        System.out.println("[AnalyticsApp] Rodando nesta máquina (IP local): " + localIp);
+        System.out.println("[AnalyticsApp] Recebendo dados vindo do broker (IP): " + BROKER);
+        System.out.println("[AnalyticsApp] -----------------------------");
 
         MqttAsyncClient client = new MqttAsyncClient(BROKER, CLIENT_ID);
         MqttConnectOptions opts = new MqttConnectOptions();

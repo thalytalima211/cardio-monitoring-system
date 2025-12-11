@@ -1,14 +1,25 @@
 package alerts;
 
 import org.eclipse.paho.client.mqttv3.*;
+import utils.Config;
+import utils.GetIP;
+
+import java.net.InetAddress;
 import java.util.UUID;
 
 public class AlertServiceApp {
-    private static final String BROKER = "tcp://localhost:1883";
+    private static final String BROKER = "tcp://" + Config.get("mqtt.broker") + ":" + Config.get("mqtt.port");
     private static final String CLIENT_ID = "alert-service-" + UUID.randomUUID().toString();
 
     public static void main(String[] args) throws Exception {
-        System.out.println("[AlertService] Iniciando...");
+        String localIp = GetIP.getMyIp();
+
+        System.out.println("[AlertService] -----------------------------");
+        System.out.println("[AlertService] Iniciando Alerts…");
+        System.out.println("[AlertService] Rodando nesta máquina (IP local): " + localIp);
+        System.out.println("[AlertService] Recebendo dados vindo do broker (IP): " + BROKER);
+        System.out.println("[AlertService] -----------------------------");
+
         MqttAsyncClient client = new MqttAsyncClient(BROKER, CLIENT_ID);
         MqttConnectOptions opts = new MqttConnectOptions();
         opts.setAutomaticReconnect(true);
